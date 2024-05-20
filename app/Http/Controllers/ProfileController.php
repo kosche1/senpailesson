@@ -86,4 +86,8 @@ class ProfileController extends Controller
             return redirect()->route('dashboard')->with('status','user-added');
         }
     }
+    public function edituser(Request $request)
+    {
+        return view('EditUser');
+    }
 }

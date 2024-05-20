@@ -74,7 +74,7 @@
                 </td>
 
                 <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a :href="route('dashboard.edit-user')" :active="request()->routeIs('dashboard.edit-user')" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     <a href="{{ route('dashboard.delete', ['id=' .$user->id]) }}" class="font-medium text-blue-600 dark:text-gray-500 hover:underline">Delete</a>
                 </td>
             </tr>
@@ -84,6 +84,7 @@
         </tbody>
     </table>
 </div>
+<x-update-modal />
 
                 </div>
             </div>

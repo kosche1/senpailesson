@@ -20,4 +20,5 @@ Route::middleware('auth')->group(function () {
 Route::get('/dashboard/delete', [ProfileController::class, 'delete'])->name('dashboard.delete');
 Route::get('/dashboard/add-user', [ProfileController::class, 'AddUser'])->name('dashboard.add-user');
 Route::post('/dashboard/add-user-post', [ProfileController::class, 'AddPost'])->name('dashboard.add-user-post');
+Route::get('/dashboard/edit-user', [ProfileController::class, 'EditUser'])->name('dashboard.edit-user');
 require __DIR__.'/auth.php';
