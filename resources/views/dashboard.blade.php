@@ -18,7 +18,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                   
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg" x-data='{ user: [] }'>
     <div class="pb-4 bg-white dark:bg-gray-900">
         <label for="table-search" class="sr-only">Search</label>
         <div class="relative mt-1">
@@ -74,7 +74,7 @@
                 </td>
 
                 <td class="px-6 py-4">
-                    <a data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a @click="user = {{ $user }}" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     <a href="{{ route('dashboard.delete', ['id=' .$user->id]) }}" class="font-medium text-blue-600 dark:text-gray-500 hover:underline">Delete</a>
                 </td>
             </tr>
@@ -83,8 +83,10 @@
             
         </tbody>
     </table>
-</div>
 <x-update-modal />
+
+</div>
+
 
                 </div>
             </div>

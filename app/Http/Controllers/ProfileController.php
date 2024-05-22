@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -62,17 +63,15 @@ class ProfileController extends Controller
     {
         // dd($request->all());
         $user = \App\Models\User::find($request->id);
-        if ($user){
+        if ($user) {
             $user->delete();
-            return redirect()->back()->with('status','user-deleted');
+            return redirect()->back()->with('status', 'user-deleted');
         }
-
     }
-    
+
     public function adduser()
     {
         return view('AddUser');
-
     }
     public function addpost(Request $request)
     {
@@ -83,8 +82,22 @@ class ProfileController extends Controller
             'password' => Hash::make($request->password)
         ]);
         if ($user) {
-            return redirect()->route('dashboard')->with('status','user-added');
+            return redirect()->route('dashboard')->with('status', 'user-added');
         }
     }
 
+    public function EditUser(Request $request)
+    {
+
+        $id = $request->id;
+        $name = $request->name;
+        $email = $request->email;
+
+        $user = User::find($id);
+
+        $user->name = $name;
+        $user->email = $email;
+        $user->save();
+        return Redirect::route('dashboard');
+    }
 }
