@@ -42,6 +42,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        AuditTrail::create([
+            'user_id'=> auth()->user()->id,
+            'description' => auth()->user()->name . ' has logout',
+        ]);
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

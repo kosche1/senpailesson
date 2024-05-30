@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\AuditTrail;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,27 +46,29 @@ class ProfileController extends Controller
     {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
+        ]);    
         Auth::logout();
-
+        
         $user->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
+        
         return Redirect::to('/');
     }
     public function delete(Request $request): RedirectResponse
     {
+        AuditTrail::create([
+            'user_id'=> auth()->user()->id,
+            'description' => auth()->user()->name . ' has Delete user account ',
+        ]);
         // dd($request->all());
         $user = \App\Models\User::find($request->id);
         if ($user) {
             $user->delete();
             return redirect()->back()->with('status', 'user-deleted');
         }
+        
     }
 
     public function adduser()
@@ -75,6 +77,11 @@ class ProfileController extends Controller
     }
     public function addpost(Request $request)
     {
+        AuditTrail::create([
+            'user_id'=> auth()->user()->id,
+            'description' => auth()->user()->name . ' Add ',
+        ]);
+
         // dd($request->all());
         $user = \App\Models\User::create([
             'name' => $request->name,
@@ -88,7 +95,10 @@ class ProfileController extends Controller
 
     public function EditUser(Request $request)
     {
-
+        AuditTrail::create([
+            'user_id'=> auth()->user()->id,
+            'description' => auth()->user()->name . ' has Edit user account ',
+        ]);
         $id = $request->id;
         $name = $request->name;
         $email = $request->email;
