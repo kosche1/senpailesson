@@ -19,6 +19,10 @@
                     <x-nav-link :href="route('dashboard.add-user')" :active="request()->routeIs('dashboard.add-user')">
                         {{ __('Add User') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('dashboard.audit-trail')" :active="request()->routeIs('dashboard.audit-trail')">
+                        {{ __('Audit Trail') }}
+                    </x-nav-link>
                 </div>
             </div>
 

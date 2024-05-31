@@ -22,4 +22,6 @@ Route::get('/dashboard/add-user', [ProfileController::class, 'AddUser'])->name('
 Route::post('/dashboard/add-user-post', [ProfileController::class, 'AddPost'])->name('dashboard.add-user-post');
 Route::post('/dashboard/edit-user', [ProfileController::class, 'EditUser'])->name('dashboard.edit-user');
 
+Route::get('/dashboard/audit-trail', [ProfileController::class, 'AuditTrail'])->name('dashboard.audit-trail');
+
 require __DIR__ . '/auth.php';

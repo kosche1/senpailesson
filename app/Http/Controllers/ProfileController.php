@@ -75,6 +75,7 @@ class ProfileController extends Controller
     {
         return view('AddUser');
     }
+
     public function addpost(Request $request)
     {
         AuditTrail::create([
@@ -109,5 +110,10 @@ class ProfileController extends Controller
         $user->email = $email;
         $user->save();
         return Redirect::route('dashboard');
+    }
+
+    public function AuditTrail()
+    {
+        return view('AuditTrail');
     }
 }
