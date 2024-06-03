@@ -6,7 +6,7 @@
     </x-slot>
 
     @php
-        $users = \App\Models\User::query()-> select('id','name','email') ->limit(50)->get();
+        $users = \App\Models\User::select('id','name','email')->paginate(15);
         
     @endphp
 
@@ -74,17 +74,19 @@
                 </td>
 
                 <td class="px-6 py-4">
-                    <a @click="user = {{ $user }}" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    <a href="{{ route('dashboard.delete', ['id=' .$user->id]) }}" class="font-medium text-blue-600 dark:text-gray-500 hover:underline">Delete</a>
+                    <a @click="user = {{ $user }}" data-modal-target="defaultModal"  data-modal-toggle="defaultModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    <a @click="user = {{ $user }}" data-modal-target="warningModal"  data-modal-toggle="warningModal" class="font-medium text-blue-600 dark:text-gray-500 hover:underline">Delete</a>
+                    <!-- "{{ route('dashboard.delete', ['id=' .$user->id]) }}" -->
                 </td>
             </tr>
             @endforeach
             
             
         </tbody>
+{{ $users->links() }}
     </table>
 <x-update-modal />
-
+<x-delete-modal />
 </div>
 
 

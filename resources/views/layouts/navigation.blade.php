@@ -23,6 +23,9 @@
                     <x-nav-link :href="route('dashboard.audit-trail')" :active="request()->routeIs('dashboard.audit-trail')">
                         {{ __('Audit Trail') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('dashboard.backup')" :active="request()->routeIs('dashboard.backup')">
+                        {{ __('Backup') }}
+                    </x-nav-link>
                 </div>
             </div>
 
