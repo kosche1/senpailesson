@@ -51,11 +51,15 @@
                         {{ $backup['last_modified'] }}
                     </td>
                     <td class="px-6 py-4">
-                        <a class="btn btn-primary" href="{{ url('backup/download/'.$backup['file_name']) }}">
+                        <a class="font-medium text-blue-600 dark:text-gray-500 hover:underline" href="{{ url('backup/download/'.$backup['file_name']) }}">
                             <i class="fas fa-cloud-download"></i> Download</a>
-                        <a class="btn btn-xs btn-danger" data-button-type="delete" href="{{ url('backup/delete/'.$backup['file_name']) }}">
+                        <a class="font-medium text-blue-600 dark:text-gray-500 hover:underline" data-button-type="delete" href="{{ url('backup/delete/'.$backup['file_name']) }}">
                             <i class="fal fa-trash"></i>
                             Delete
+                        </a>
+                        <a class="font-medium text-blue-600 dark:text-gray-500 hover:underline" data-button-type="delete" href="{{ url('backup/delete/'.$backup['file_name']) }}">
+                            <!-- <i class="fal fa-trash"></i> -->
+                            Restore
                         </a>
                     </td>
                 </tr>
