@@ -18,19 +18,30 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                   
 @if (count($backups))
-    <table class="table table-striped table-bordered">
-        <thead class="thead-dark">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th>File</th>
-                <th>Size</th>
-                <th>Date</th>
-                <th>Age</th>
-                <th></th>
+            <th scope="col" class="p-4">
+
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    File
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Size
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Date
+                </th>
+
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
             </tr>
         </thead>
         <tbody>
             @foreach($backups as $backup)
-                <tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td>{{ $backup['file_name'] }}</td>
                     <td>{{ $backup['file_size'] }}</td>
                     <td>
@@ -39,7 +50,7 @@
                     <td>
                         {{ $backup['last_modified'] }}
                     </td>
-                    <td class="text-right">
+                    <td class="px-6 py-4">
                         <a class="btn btn-primary" href="{{ url('backup/download/'.$backup['file_name']) }}">
                             <i class="fas fa-cloud-download"></i> Download</a>
                         <a class="btn btn-xs btn-danger" data-button-type="delete" href="{{ url('backup/delete/'.$backup['file_name']) }}">
