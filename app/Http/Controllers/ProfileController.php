@@ -7,9 +7,11 @@ use Illuminate\View\View;
 use App\Models\AuditTrail;
 use Illuminate\Http\Request;
 use Spatie\Backup\Helpers\Format;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
@@ -145,4 +147,13 @@ class ProfileController extends Controller
     {
         return view('Restored');
     }
+
+    public function runBackup()
+    {
+        Artisan::call('backup:run', ['--no-interaction' => true]);
+        Log::info('backup has runed');
+        return redirect()->back()->with('success', 'Backup executed successfully!');
+    }
+
+
 }
