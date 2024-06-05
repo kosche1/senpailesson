@@ -25,4 +25,7 @@ Route::post('/dashboard/edit-user', [ProfileController::class, 'EditUser'])->nam
 Route::get('/dashboard/audit-trail', [ProfileController::class, 'AuditTrail'])->name('dashboard.audit-trail');
 Route::get('/dashboard/backup', [ProfileController::class, 'BackUp'])->name('dashboard.backup');
 Route::get('/dashboard/restored', [ProfileController::class, 'Restored'])->name('dashboard.restored');
+
+Route::get('/Runbackup', [ProfileController::class, 'runBackup'])->name('Runbackup');
+
 require __DIR__ . '/auth.php';
