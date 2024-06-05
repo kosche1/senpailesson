@@ -28,4 +28,8 @@ Route::get('/dashboard/restored', [ProfileController::class, 'Restored'])->name(
 
 Route::get('/Runbackup', [ProfileController::class, 'runBackup'])->name('Runbackup');
 
+Route::get('/Restorebackup', [ProfileController::class, 'restoreBackup'])->name('Restorebackup');
+Route::get('backup/download/{file_name}', [ProfileController::class, 'download'])->name('download');
+Route::get('backup/backup_delete/{file_name}', [ProfileController::class, 'backup_delete'])->name('backup_delete');
+
 require __DIR__ . '/auth.php';

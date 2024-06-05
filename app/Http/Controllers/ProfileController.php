@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
 
+
 class ProfileController extends Controller
 {
     /**
@@ -154,6 +155,41 @@ class ProfileController extends Controller
         Log::info('backup has runed');
         return redirect()->back()->with('success', 'Backup executed successfully!');
     }
+    public function restoreBackup()
+    {
+        Artisan::call('backup:restore', ['--no-interaction' => true, '--reset'=> true]);
+        Log::info('backup has runed');
+        return redirect()->back()->with('success', 'Backup executed successfully!');
+    }
 
+    public function download($file_name)
+    {
+        $file = config('backup.backup.name') . '/' . $file_name;
+        $disk = Storage::disk(config('backup.backup.destination.disks')[0]);
+    
+        if ($disk->exists($file)) {
+            $stream = $disk->readStream($file);
+            return \Response::stream(function () use ($stream) {
+                fpassthru($stream);
+            }, 200, [
+                "Content-Type" => $disk->mimeType($file),
+                "Content-Length" => $disk->size($file),
+                "Content-disposition" => "attachment; filename=\"" . basename($file) . "\"",
+            ]);
+        } else {
+            abort(404, "The backup file doesn't exist.");
+        }
+    }
 
+    public function backup_delete($file_name)
+    {
+        // dd($file_name);
+        $disk = Storage::disk(config('backup.backup.destination.disks')[0]);
+        if ($disk->exists(config('backup.backup.name') . '/' . $file_name)) {
+            $disk->delete(config('backup.backup.name') . '/' . $file_name);
+            return redirect()->back();
+        } else {
+            abort(404, "The backup file doesn't exist.");
+        }
+    }
 }
