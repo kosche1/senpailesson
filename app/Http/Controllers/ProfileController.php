@@ -66,7 +66,7 @@ class ProfileController extends Controller
     {
         AuditTrail::create([
             'user_id'=> auth()->user()->id,
-            'description' => auth()->user()->name . ' has Delete user account ',
+            'description' => auth()->user()->name . ' has delete a user account ',
         ]);
         // dd($request->all());
         $user = \App\Models\User::find($request->id);
@@ -86,7 +86,7 @@ class ProfileController extends Controller
     {
         AuditTrail::create([
             'user_id'=> auth()->user()->id,
-            'description' => auth()->user()->name . ' Add ',
+            'description' => auth()->user()->name . ' has added a new user. ',
         ]);
 
         // dd($request->all());
@@ -104,7 +104,7 @@ class ProfileController extends Controller
     {
         AuditTrail::create([
             'user_id'=> auth()->user()->id,
-            'description' => auth()->user()->name . ' has Edit user account ',
+            'description' => auth()->user()->name . ' has modify a user account ',
         ]);
         $id = $request->id;
         $name = $request->name;
@@ -144,26 +144,34 @@ class ProfileController extends Controller
         //  dd($backups);
         return view('BackUp')->with(compact('backups'));
     }
-    public function Restored()
-    {
-        return view('Restored');
-    }
 
     public function runBackup()
-    {
+    {   
+        AuditTrail::create([
+            'user_id'=> auth()->user()->id,
+            'description' => auth()->user()->name . ' Backup has been created ',
+        ]);
         Artisan::call('backup:run', ['--no-interaction' => true]);
         Log::info('backup has runed');
         return redirect()->back()->with('success', 'Backup executed successfully!');
     }
     public function restoreBackup()
-    {
+    {   
+        AuditTrail::create([
+            'user_id'=> auth()->user()->id,
+            'description' => auth()->user()->name . ' Backup has been restored ',
+        ]);
         Artisan::call('backup:restore', ['--no-interaction' => true, '--reset'=> true]);
         Log::info('backup has runed');
         return redirect()->back()->with('success', 'Backup executed successfully!');
     }
 
     public function download($file_name)
-    {
+    {   
+        AuditTrail::create([
+            'user_id'=> auth()->user()->id,
+            'description' => auth()->user()->name . ' Backup has been downloaded ',
+        ]);
         $file = config('backup.backup.name') . '/' . $file_name;
         $disk = Storage::disk(config('backup.backup.destination.disks')[0]);
     
@@ -184,6 +192,10 @@ class ProfileController extends Controller
     public function backup_delete($file_name)
     {
         // dd($file_name);
+        AuditTrail::create([
+            'user_id'=> auth()->user()->id,
+            'description' => auth()->user()->name . ' Backup has been deleted ',
+        ]);
         $disk = Storage::disk(config('backup.backup.destination.disks')[0]);
         if ($disk->exists(config('backup.backup.name') . '/' . $file_name)) {
             $disk->delete(config('backup.backup.name') . '/' . $file_name);
@@ -191,5 +203,18 @@ class ProfileController extends Controller
         } else {
             abort(404, "The backup file doesn't exist.");
         }
+    }
+
+    public function search()
+    {   
+        $ideas = Idea::orderBy(' created_at','DESC');
+
+        if(request()->has ('search')){
+            $ideas = $ideas->where('content','like', '%' . request()->get('search','') . '%' );
+        }
+
+        return view(' dashboard' , [
+            'ideas' => $ideas->paginate(5)
+        ]);
     }
 }

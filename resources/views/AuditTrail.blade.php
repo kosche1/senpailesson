@@ -6,8 +6,8 @@
     </x-slot>
 
     @php
-        $users = \App\Models\AuditTrail::query()->select('id','Description','created_at','updated_at') ->limit(50)->get();
-        
+        $users = \App\Models\AuditTrail::select('id','Description','created_at','updated_at') ->paginate(15);
+        // $users = \App\Models\User::select('id','name','email')->paginate(15);
     @endphp
 
    
@@ -85,6 +85,7 @@
             
             
         </tbody>
+        {{ $users->links() }}
     </table>
 <x-update-modal />
 

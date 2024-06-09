@@ -32,4 +32,6 @@ Route::get('/Restorebackup', [ProfileController::class, 'restoreBackup'])->name(
 Route::get('backup/download/{file_name}', [ProfileController::class, 'download'])->name('download');
 Route::get('backup/backup_delete/{file_name}', [ProfileController::class, 'backup_delete'])->name('backup_delete');
 
+Route::get('/Search', [ProfileController::class, 'search'])->name('Search');
+
 require __DIR__ . '/auth.php';
