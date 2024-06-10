@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,6 +33,7 @@ Route::get('/Restorebackup', [ProfileController::class, 'restoreBackup'])->name(
 Route::get('backup/download/{file_name}', [ProfileController::class, 'download'])->name('download');
 Route::get('backup/backup_delete/{file_name}', [ProfileController::class, 'backup_delete'])->name('backup_delete');
 
-Route::get('/Search', [ProfileController::class, 'search'])->name('Search');
+Route::get('/search', [SearchController::class,'search'])->name('search');
+
 
 require __DIR__ . '/auth.php';

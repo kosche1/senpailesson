@@ -12,7 +12,7 @@
 
 
 
-    <div class="py-12">
+    <div class="py-12 bg-slate-900">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -23,14 +23,11 @@
         <label for="table-search" class="sr-only">Search</label>
         <div class="relative mt-1">
 
-            <a href="{{ route('Search') }}">
-                <input type="text" name="search" class="block pt-2 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
-                <button type="submit"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Search
-                </button>
-            </a>
-            </form>
+        <form action="{{ route('search') }}" method="GET">
+            <input type="text" name="query" placeholder="Search username or UID">
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+        </form>
+
         </div>
     </div>
     <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
@@ -86,7 +83,16 @@
 
 
         </tbody>
+        <ul>
+            @foreach ($users as $user)
+                <li>{{ $user->username }}</li>
+            @endforeach
+        </ul>
 {{ $users->links() }}
+
+
+
+
     </table>
 <x-update-modal />
 <x-delete-modal />
