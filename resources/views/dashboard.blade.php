@@ -50,19 +50,22 @@ if ($query) {
                 <td class="px-6 py-4">{{ $user->name }}</td>
                 <td class="px-6 py-4">{{ $user->email }}</td>
                 <td class="px-6 py-4">
-                  <a @click="user = {{ $user }}" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                  <a @click="user = {{ $user }}" data-modal-target="warningModal" data-modal-toggle="warningModal" class="font-medium text-blue-600 dark:text-gray-500 hover:underline">Delete</a>
+                  <a @click="user = {{ $user }}" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                  Edit</a>
+                  <a @click="user = {{ $user }}" data-modal-target="warningModal" data-modal-toggle="warningModal" class="font-medium text-blue-600 dark:text-gray-500 hover:underline">
+                  Delete</a>
                 </td>
               </tr>
               @endforeach
             </tbody>
           </table>
+          <x-update-modal />
+          <x-delete-modal />
           {{ $users->links() }} </div>
       </div>
     </div>
   </div>
 </div>
 
-    <x-update-modal />
-    <x-delete-modal />
+    
 </x-app-layout>
